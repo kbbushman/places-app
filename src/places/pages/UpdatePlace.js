@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -35,33 +35,60 @@ const TEMP_PLACES = [
 ];
 
 const UpdatePlace = () => {
-  const placeId = useParams().placeId;
+  const [isLoading, setIsLoading] = useState(true);
+  const selectedPlaceId = useParams().placeId;
 
-  const place = TEMP_PLACES.find(p => p.id === placeId);
-
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: place.title,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
       description: {
-        value: place.description,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
     },
-    true
+    false
   );
+
+  const selectedPlace = TEMP_PLACES.find(place => place.id === selectedPlaceId);
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: selectedPlace.title,
+          isValid: true,
+        },
+        description: {
+          value: selectedPlace.description,
+          isValid: true,
+        },
+      },
+      true
+    );
+
+    setIsLoading(false);
+  }, [setFormData, selectedPlace]);
 
   const updatePlaceSubmitHandler = (event) => {
     event.preventDefault();
     console.log('Form State --->', formState.inputs);
   };
 
-  if (!place) {
+  if (!selectedPlace) {
     return (
       <div className="center">
         <h2>Could not find place!</h2>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
       </div>
     );
   }
