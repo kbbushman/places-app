@@ -4,6 +4,8 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 
+import './PlaceForm.css';
+
 const TEMP_PLACES = [
   {
     id: 'p1',
@@ -36,6 +38,8 @@ const UpdatePlace = () => {
 
   const place = TEMP_PLACES.find(p => p.id === placeId);
 
+  console.log(place)
+
   if (!place) {
     return (
       <div className="center">
@@ -45,12 +49,13 @@ const UpdatePlace = () => {
   }
 
   return (
-    <form>
+    <form className="place-form">
       <Input
         id="title"
+        element="input"
         type="text"
         label="Title"
-        validators={[VALIDATOR_REQUIRE]}
+        validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
         onInput={() => {}}
         value={place.title}
@@ -58,7 +63,7 @@ const UpdatePlace = () => {
       />
       <Input
         id="description"
-        type="textarea"
+        element="textarea"
         label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (min 5 characters)."
