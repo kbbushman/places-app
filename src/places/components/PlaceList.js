@@ -5,7 +5,7 @@ import Button from '../../shared/components/FormElements/Button';
 
 import './PlaceList.css';
 
-const PlaceList = ({ items }) => {
+const PlaceList = ({ items, onDeletePlace }) => {
   if (items.length === 0) {
     return <div className="place-list center">
       <Card>
@@ -26,6 +26,7 @@ const PlaceList = ({ items }) => {
         address={place.address}
         creatorId={place.creator}
         coordinates={place.location}
+        onDelete={onDeletePlace}
       />
     ))}
   </ul>
