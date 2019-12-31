@@ -68,7 +68,15 @@ const App = () => {
       <Router>
         <MainNavigation />
         <main>
-          <Suspense fallback={<div className="center"><LoadingSpinner /></div>}>{routes}</Suspense>
+          <Suspense
+            fallback={
+              <div className="center">
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            {routes}
+          </Suspense>
         </main>
       </Router>
     </AuthContext.Provider>
